@@ -13,14 +13,14 @@ Our pipeline uses a multi-agent orchestration pattern to ensure maximum security
 
 ```mermaid
 graph TD
-    A[PDF/DOCX/TXT Upload] --> B[Sanitizer Agent (Qwen2.5-7B)]
+    A[PDF/DOCX/TXT Upload] --> B["Sanitizer Agent (Qwen2.5-7B)"]
     B --> C{PII Detected?}
-    C -- Yes --> D[Regex + LLM Redaction]
-    C -- No --> E[Analyst Agent (Qwen2.5-72B)]
+    C -- Yes --> D["Regex + LLM Redaction"]
+    C -- No --> E["Analyst Agent (Qwen2.5-72B)"]
     D --> E
     E --> F[Deep Clinical Analysis]
-    F --> G[Compliance Agent (Qwen2.5-14B)]
-    G --> H[HIPAA/GDPR Scoring]
+    F --> G["Compliance Agent (Qwen2.5-14B)"]
+    G --> H["HIPAA/GDPR Scoring"]
     H --> I[Private Dashboard]
     
     subgraph "AMD MI300X INFRASTRUCTURE (192GB HBM3)"

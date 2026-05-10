@@ -17,3 +17,5 @@ venv/
 .pytest_cache/
 *.webp
 *.png
+!docs/assets/*.png
+!docs/assets/*.webp
