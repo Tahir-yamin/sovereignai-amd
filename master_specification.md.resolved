@@ -1,0 +1,515 @@
+# 🏆 SovereignAI-AMD: Complete Project Specification
+## Master Document — Everything You Need to Build and Win
+
+---
+
+# PART 1: PROJECT IDENTITY
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   Project Name:  SovereignAI-AMD                            │
+│   Tagline:       "Enterprise AI that never phones home"     │
+│   Track:         Track 1 (AI Agents) + Extra Challenge      │
+│   Team Size:     1-3 people (optimized for solo)            │
+│   Time Budget:   48 hours                                   │
+│   Prize Targets: $8,000 - $12,000+ across all categories    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+# PART 2: COMPLETE TECH STACK
+
+## 2.1 Hardware Layer
+```text
+AMD Instinct MI300X
+├── Memory:     192GB HBM3 (this is your selling point)
+├── Bandwidth:  5.3 TB/s
+├── Access:     AMD Developer Cloud ($100 credits)
+└── Key Claim:  Runs Llama 3.3 70B in FULL PRECISION
+                NVIDIA H100 (80GB) CANNOT do this
+```
+
+## 2.2 Software Stack — Complete List
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│  LAYER 1: GPU COMPUTE                                       │
+├─────────────────────────────────────────────────────────────┤
+│  ROCm 7.2+          → AMD's GPU compute platform            │
+│  PyTorch 2.11+      → ROCm-compiled version                 │
+│  Transformers       → ROCm-native inference engine          │
+│  Accelerate         → Multi-GPU/HBM orchestration           │
+│  rocm-smi           → GPU telemetry (built into ROCm)       │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 2: AI MODELS                                         │
+├─────────────────────────────────────────────────────────────┤
+│  Qwen2.5-72B        → Primary Analyst Agent (192GB HBM3)    │
+│  Qwen2.5-14B        → Compliance Agent (rule reasoning)     │
+│  Qwen2.5-7B         → Sanitizer Agent (fast PII detection)  │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 3: AGENT ORCHESTRATION                               │
+├─────────────────────────────────────────────────────────────┤
+│  LangGraph 0.2+     → Agent state machine + workflow        │
+│  LangChain 0.3+     → LLM connectors + prompt templates     │
+│  Pydantic 2.0+      → Data validation + schemas             │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 4: BACKEND API                                       │
+├─────────────────────────────────────────────────────────────┤
+│  FastAPI 0.110+     → REST API server                       │
+│  Uvicorn            → ASGI server                           │
+│  WebSockets         → Real-time dashboard updates           │
+│  Python-multipart   → File upload handling                  │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 5: DOCUMENT PROCESSING                               │
+├─────────────────────────────────────────────────────────────┤
+│  PyMuPDF (fitz)     → PDF parsing                           │
+│  python-docx        → DOCX parsing                          │
+│  Pytesseract        → OCR for scanned documents             │
+│  Pillow             → Image preprocessing for OCR           │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 6: FRONTEND / UI                                     │
+├─────────────────────────────────────────────────────────────┤
+│  Gradio 4.0+        → Main demo UI + HF Spaces deployment   │
+│  Plotly             → Real-time GPU metrics charts          │
+│  Pandas             → Data display tables                   │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 7: SECURITY / ATTESTATION                            │
+├─────────────────────────────────────────────────────────────┤
+│  hashlib (stdlib)   → SHA-256 document fingerprinting       │
+│  python-jose        → JWT audit log signing                 │
+│  cryptography       → Document processing certificates      │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 8: DEPLOYMENT                                        │
+├─────────────────────────────────────────────────────────────┤
+│  Docker             → Containerization                      │
+│  Hugging Face Spaces→ Public demo deployment                │
+│  GitHub             → Open source repository                │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## 2.3 Complete requirements.txt
+```text
+# GPU Compute (ROCm Native)
+torch==2.11.0+rocm7.2
+transformers==4.45.0
+accelerate==0.34.0
+safetensors==0.4.5
+
+# Agent Orchestration
+langgraph==0.2.39
+langchain==0.3.7
+langchain-community==0.3.0
+langchain-core==0.3.0
+
+# Data Validation
+pydantic==2.7.0
+pydantic-settings==2.3.0
+
+# Backend API
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+python-multipart==0.0.9
+websockets==12.0
+httpx==0.27.0
+
+# Document Processing
+PyMuPDF==1.24.0
+python-docx==1.1.0
+pytesseract==0.3.10
+Pillow==10.3.0
+
+# Frontend / UI
+gradio==4.36.0
+plotly==5.22.0
+pandas==2.2.0
+
+# Security / Attestation
+python-jose[cryptography]==3.3.0
+cryptography==42.0.0
+
+# Utilities
+python-dotenv==1.0.0
+loguru==0.7.2
+rich==13.7.0
+typer==0.12.0
+aiofiles==23.2.0
+pytest==8.2.0
+pytest-asyncio==0.23.0
+```
+
+---
+
+# PART 3: COMPLETE FILE STRUCTURE
+
+```text
+sovereignai-amd/
+│
+├── 📄 README.md
+├── 📄 requirements.txt
+├── 📄 Dockerfile
+├── 📄 docker-compose.yml
+├── 📄 .env.example
+├── 📄 .gitignore
+│
+├── 📁 src/
+│   │
+│   ├── 📁 agents/
+│   │   ├── __init__.py
+│   │   ├── sanitizer_agent.py      ← Agent 1: PII Redaction
+│   │   ├── analyst_agent.py        ← Agent 2: Deep Analysis
+│   │   ├── compliance_agent.py     ← Agent 3: HIPAA/GDPR Check
+│   │   └── base_agent.py           ← Shared agent interface
+│   │
+│   ├── 📁 pipeline/
+│   │   ├── __init__.py
+│   │   ├── graph.py                ← LangGraph state machine
+│   │   ├── state.py                ← Pipeline state definition
+│   │   └── runner.py               ← Pipeline execution engine
+│   │
+│   ├── 📁 models/
+│   │   ├── __init__.py
+│   │   ├── model_manager.py        ← vLLM model loading + serving
+│   │   └── prompts.py              ← All prompt templates
+│   │
+│   ├── 📁 document/
+│   │   ├── __init__.py
+│   │   ├── parser.py               ← PDF/DOCX/TXT parsing
+│   │   ├── chunker.py              ← Document chunking logic
+│   │   └── validator.py            ← Input validation
+│   │
+│   ├── 📁 attestation/
+│   │   ├── __init__.py
+│   │   ├── hardware_monitor.py     ← rocm-smi live readings
+│   │   ├── audit_logger.py         ← Signed audit trail
+│   │   └── network_monitor.py      ← Zero-connection proof
+│   │
+│   ├── 📁 api/
+│   │   ├── __init__.py
+│   │   ├── main.py                 ← FastAPI app entry point
+│   │   ├── routes/
+│   │   │   ├── process.py          ← Document processing endpoints
+│   │   │   ├── hardware.py         ← GPU telemetry endpoints
+│   │   │   └── audit.py            ← Audit log endpoints
+│   │   └── websocket_manager.py    ← Real-time updates
+│   │
+│   └── 📁 ui/
+│       ├── __init__.py
+│       ├── app.py                  ← Main Gradio application
+│       ├── dashboard.py            ← Hardware attestation dashboard
+│       └── components.py           ← Reusable UI components
+│
+├── 📁 tests/
+│   ├── test_sanitizer.py
+│   ├── test_analyst.py
+│   ├── test_compliance.py
+│   └── test_pipeline.py
+│
+├── 📁 sample_docs/
+│   ├── fake_medical_record.pdf     ← Demo document 1
+│   ├── fake_legal_contract.pdf     ← Demo document 2
+│   └── fake_financial_report.pdf   ← Demo document 3
+│
+└── 📁 scripts/
+    ├── setup_rocm.sh               ← ROCm environment setup
+    ├── download_models.sh          ← Pull models from HF
+    └── run_demo.sh                 ← One-command demo launcher
+```
+
+---
+
+# PART 4: COMPLETE CODE
+
+## 4.1 Pipeline State Definition
+```python
+# src/pipeline/state.py
+
+from typing import TypedDict, Annotated, List, Optional
+from pydantic import BaseModel
+from datetime import datetime
+import operator
+
+class PIIEntity(BaseModel):
+    entity_type: str
+    original_value: str
+    token_replacement: str
+    position_start: int
+    position_end: int
+    confidence: float
+
+class ComplianceViolation(BaseModel):
+    rule_id: str
+    rule_name: str
+    severity: str
+    description: str
+    recommendation: str
+
+class AuditEntry(BaseModel):
+    timestamp: datetime
+    agent_name: str
+    action: str
+    input_hash: str
+    output_hash: str
+    tokens_used: int
+    processing_time_ms: int
+    gpu_memory_used_gb: float
+
+class SovereignAIState(TypedDict):
+    document_id: str
+    original_filename: str
+    raw_text: str
+    document_hash: str
+    sanitized_text: str
+    pii_entities: List[PIIEntity]
+    pii_count: int
+    analysis_report: str
+    key_findings: List[str]
+    risk_summary: str
+    document_type: str
+    compliance_violations: List[ComplianceViolation]
+    compliance_score: float
+    compliance_framework: str
+    audit_trail: Annotated[List[AuditEntry], operator.add]
+    total_processing_time_ms: int
+    bytes_sent_external: int
+    current_agent: str
+    errors: List[str]
+    is_complete: bool
+```
+
+## 4.2 Model Manager (vLLM on ROCm)
+```python
+# src/models/model_manager.py
+
+from vllm import LLM, SamplingParams
+from loguru import logger
+import subprocess
+import json
+from typing import Optional
+
+class ModelManager:
+    MODELS = {
+        "sanitizer": {
+            "path": "./models/qwen2.5-7b",
+            "max_new_tokens": 4096,
+        },
+        "analyst": {
+            "path": "./models/qwen2.5-72b",
+            "max_new_tokens": 8192,
+            "description": "Deep document analysis - Optimized for MI300X"
+        },
+        "compliance": {
+            "path": "./models/qwen2.5-14b",
+            "max_new_tokens": 4096,
+        }
+    }
+
+    def __init__(self):
+        self.loaded_models = {}
+        self.sampling_params = {
+            "sanitizer": {"temperature": 0.1, "top_p": 0.9},
+            "analyst": {"temperature": 0.3, "top_p": 0.9},
+            "compliance": {"temperature": 0.1, "top_p": 0.9}
+        }
+
+    def load_model(self, model_name: str):
+        if model_name in self.loaded_models:
+            return self.loaded_models[model_name]
+        
+        config = self.MODELS[model_name]
+        logger.info(f"Loading {model_name} on MI300X via Transformers...")
+        
+        tokenizer = AutoTokenizer.from_pretrained(config["path"], trust_remote_code=True)
+        model = AutoModelForCausalLM.from_pretrained(
+            config["path"],
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+            trust_remote_code=True
+        )
+        
+        self.loaded_models[model_name] = (tokenizer, model)
+        return self.loaded_models[model_name]
+
+    def generate(self, model_name: str, prompt: str, system_prompt: Optional[str] = None) -> str:
+        tokenizer, model = self.loaded_models.get(model_name) or self.load_model(model_name)
+        # ... [full implementation as in src/models/model_manager.py]
+
+model_manager = ModelManager()
+```
+
+## 4.6 LangGraph Pipeline
+```python
+# src/pipeline/graph.py
+
+from langgraph.graph import StateGraph, END
+from loguru import logger
+from src.pipeline.state import SovereignAIState
+from src.agents.sanitizer_agent import SanitizerAgent
+from src.agents.analyst_agent import AnalystAgent
+from src.agents.compliance_agent import ComplianceAgent
+
+def build_pipeline() -> StateGraph:
+    sanitizer = SanitizerAgent()
+    analyst = AnalystAgent()
+    compliance = ComplianceAgent()
+
+    workflow = StateGraph(SovereignAIState)
+    workflow.add_node("sanitizer", sanitizer.run)
+    workflow.add_node("analyst", analyst.run)
+    workflow.add_node("compliance", compliance.run)
+
+    workflow.set_entry_point("sanitizer")
+    workflow.add_edge("sanitizer", "analyst")
+    workflow.add_edge("analyst", "compliance")
+    workflow.add_edge("compliance", END)
+
+    return workflow.compile()
+
+pipeline = build_pipeline()
+```
+
+---
+
+# PART 5: SETUP AND RUN SCRIPTS
+
+## 5.1 ROCm Setup Script
+```bash
+#!/bin/bash
+# scripts/setup_rocm.sh
+
+echo "═══════════════════════════════════════════"
+echo "  SovereignAI-AMD: ROCm Environment Setup"
+echo "═══════════════════════════════════════════"
+
+echo "[1/6] Checking AMD GPU..."
+rocm-smi --showid
+
+echo "[2/6] Checking ROCm version..."
+rocminfo | grep "ROCm" | head -3
+
+echo "[3/6] Installing Python dependencies..."
+pip install -r requirements.txt
+
+echo "[4/6] Installing vLLM for ROCm..."
+pip install vllm --extra-index-url https://download.pytorch.org/whl/rocm6.0
+
+echo "[5/6] Verifying GPU memory..."
+rocm-smi --showmeminfo vram
+```
+
+## 5.2 Model Download Script
+```bash
+#!/bin/bash
+# scripts/download_models.sh
+
+huggingface-cli login --token $HF_TOKEN
+
+python -c "
+from huggingface_hub import snapshot_download
+snapshot_download('Qwen/Qwen2.5-7B-Instruct', local_dir='./models/qwen2.5-7b')
+snapshot_download('meta-llama/Llama-3.3-70B-Instruct', local_dir='./models/llama-3.3-70b')
+snapshot_download('Qwen/Qwen2.5-14B-Instruct', local_dir='./models/qwen2.5-14b')
+"
+```
+
+---
+
+# PART 6: 48-HOUR BUILD TIMELINE
+
+```text
+╔════════════════════════════════════════════════════════════════╗
+║                    48-HOUR BATTLE PLAN                         ║
+╠════════════════════════════════════════════════════════════════╣
+║                                                                ║
+║  HOUR 0-2: ENVIRONMENT                                         ║
+║  ├── Spin up AMD Developer Cloud MI300X                        ║
+║  ├── Run setup_rocm.sh                                         ║
+║  ├── Verify rocm-smi shows GPU                                 ║
+║  └── Start model downloads (run in background)                 ║
+║                                                                ║
+║  HOUR 2-6: CORE PIPELINE (MVP)                                 ║
+║  ├── Build state.py (TypedDict schema)                         ║
+║  ├── Build sanitizer_agent.py (regex layer only first)         ║
+║  ├── Build pipeline/graph.py (basic LangGraph)                 ║
+║  └── Test: process a text string end-to-end                    ║
+║                                                                ║
+║  HOUR 6-12: AGENT LOGIC                                        ║
+║  ├── Add LLM layer to sanitizer (Qwen2.5-7B)                   ║
+║  ├── Build analyst_agent.py (Qwen2.5-72B)                      ║
+║  ├── Test analyst with simple document                         ║
+║  └── Build compliance_agent.py (Qwen2.5-14B)                   ║
+║                                                                ║
+║  HOUR 12-18: ATTESTATION DASHBOARD                             ║
+║  ├── Build hardware_monitor.py (rocm-smi integration)          ║
+║  ├── Build audit_logger.py (SHA-256 chain)                     ║
+║  ├── Build network_monitor.py (zero-connection proof)          ║
+║  └── Test: dashboard shows live GPU data                       ║
+║                                                                ║
+║  HOUR 18-26: DOCUMENT PROCESSING                               ║
+║  ├── Build document/parser.py (PDF+DOCX+TXT)                   ║
+║  ├── Create 3 sample demo documents                            ║
+║  ├── Test full pipeline with real PDF                          ║
+║  └── Fix all bugs from real document testing                   ║
+║                                                                ║
+║  HOUR 26-34: GRADIO UI                                         ║
+║  ├── Build src/ui/app.py (main interface)                      ║
+║  ├── Connect all outputs to UI components                      ║
+║  ├── Add hardware attestation panel (live updates)             ║
+║  └── Style with AMD-themed dark mode CSS                       ║
+║                                                                ║
+║  HOUR 34-40: INTEGRATION & TESTING                             ║
+║  ├── End-to-end test: medical record PDF                       ║
+║  ├── End-to-end test: legal contract PDF                       ║
+║  ├── End-to-end test: financial report PDF                     ║
+║  └── Fix all edge cases                                        ║
+║                                                                ║
+║  HOUR 40-44: HUGGING FACE DEPLOYMENT                           ║
+║  ├── Create HF Space in AMD hackathon org                      ║
+║  ├── Deploy Gradio app to HF Spaces                            ║
+║  ├── Test public demo works                                    ║
+║  └── Share on social media (tag @AIatAMD)                      ║
+║                                                                ║
+║  HOUR 44-47: SUBMISSION MATERIALS                              ║
+║  ├── Record 3-minute demo video                                ║
+║  ├── Write README.md (technical + business)                    ║
+║  ├── Create 10-slide pitch deck                                ║
+║  └── Write Build in Public blog post                           ║
+║                                                                ║
+║  HOUR 47-48: SUBMIT                                            ║
+║  ├── Submit to lablab.ai                                       ║
+║  ├── Post 2 social updates (tag AMD + lablab)                  ║
+║  └── Ask friends to like HF Space                              ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+# PART 7: DEMO DOCUMENTS TO CREATE
+```text
+FAKE_MEDICAL_RECORD:
+Patient Name: Sarah Elizabeth Johnson
+Date of Birth: 03/15/1985
+SSN: 412-78-9234
+Diagnosis: Acute Myocardial Infarction (STEMI)
+(Used to trigger HIPAA checks and demonstrate perfect redaction).
+```
+
+---
+
+# PART 8: THE PITCH (Memorize This)
+```text
+"Banks and hospitals generate millions of sensitive documents daily. 
+They cannot use ChatGPT because sending patient data to OpenAI violates HIPAA. 
+
+SovereignAI-AMD solves this. 
+
+We built a 3-agent AI pipeline that runs entirely on an AMD MI300X — 192 gigabytes of local memory means we run Llama 70B natively. NVIDIA's H100 cannot. 
+
+Zero bytes leave the machine. 
+We prove it with live cryptographic attestation. 
+
+This is AMD's killer app for the enterprise market."
+```
