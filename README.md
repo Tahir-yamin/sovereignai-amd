@@ -1,3 +1,5 @@
+![SovereignAI-AMD Cover](docs/assets/hero_cover.png)
+
 # 🛡️ SovereignAI-AMD
 ### "Enterprise AI that never phones home."
 
